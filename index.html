@@ -3,11 +3,73 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>网址导航</title>
-
+		<link href="css/index.css" type="text/css" rel="stylesheet"/>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+			    function getParameterByName(name, url = window.location.href) {
+			        name = name.replace(/[\[\]]/g, '\\$&');
+			        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+			            results = regex.exec(url);
+			        if (!results) return null;
+			        if (!results[2]) return '';
+			        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+			    }
+			
+			    // 获取agentNo参数
+				var agentNo = getParameterByName('agentNo');
+			
+				// 创建一个ul元素
+				var ulElement = $('.nav-list');
+			
+				// 定义一些示例链接
+				var links = [
+					{ title: "电信专线 ", text: '青苹果1', url: 'https://web.qpg1.com' },
+					{ title: "联通专线 ", text: '青苹果3', url: 'https://web.qpg1.com' },
+					{ title: "默认专线 ", text: '青苹果4', url: 'https://web.qpg1.com' },
+					{ title: "移动专线 ", text: '青苹果2', url: 'https://web.qpg1.com' },
+					{ title: "备用专线 ", text: '青苹果5', url: 'https://web.qpg1.com' },
+				];
+			
+				// 循环生成li元素
+				$.each(links, function(index, link) {
+					// 创建li元素
+					var li = $('<li>'+link.title+'</li>');
+			
+					// 创建a元素
+					var a = $('<a></a>').attr('href', link.url + (link.url.indexOf('?') >= 0 ? '&' : '?') + 'agentNo=' + agentNo).text(link.text);
+			
+					// 将a元素添加到li元素中
+					li.append(a);
+			
+					// 将li元素添加到ul元素中
+					ulElement.append(li);
+				});
+			});
+		</script>
 	</head>
 	<body>
-		<div id="con">
-			<h1>这是一个测试网页</h1>
+		<div class="main-content">
+			<div class="header">
+				<div class="header_title">
+					<h2>青苹果影院</h2>
+				</div>
+			</div>
+			<div class="content">
+				<div class="top">
+					<div>网站导航：<span class="blue">qpg1.com</span></div>
+					<div>发邮件至 <span class="blue">panda5209527@outlook.com</span> 获取备用网址</div>
+				</div>
+				<div class="middle">
+					<div class="screenshot red">截图保存本页面以防止走丢</div>
+					<ul class="nav-list">
+					</ul>
+				</div>
+			</div>
+			<div class="footer">
+				<div>强烈建议使用Chrome或Edge浏览器</div>
+				<div>打不开时请尝试不同的运营商网络访问</div>
+			</div>
 		</div>
 	</body>
 </html>
