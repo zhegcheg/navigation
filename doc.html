@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<link rel="icon" href="/images/wechat.png">
+	<link rel="stylesheet" href="/lib/layui/css/layui.css" />
+	<!-- 忽略自动识别电话 -->
+	<meta name="format-detection" content="telephone=no">
+	<!-- 忽略自动识别邮箱 -->
+	<meta name="format-detection" content="email=no">
+	<!-- 忽略自动识别电话和邮箱 -->
+	<meta name="format-detection" content="telephone=no, email=no">
+	<title>对接文档</title>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.16/css/layui.css" />
+	<!--	<link rel="stylesheet" href="/css/doc.css" />-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script src="	https://cdnjs.cloudflare.com/ajax/libs/layui/2.9.16/layui.js"></script>
+	<style>
+		.layui-elem-field {
+			margin-top: 35px;
+		}
+
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+
+
+		.colorRed {
+			color: red;
+		}
+
+		.fontw600 {
+			font-weight: 600;
+		}
+
+		.content {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: nowrap;
+		}
+
+		.menu_box {
+			width: 15%;
+		}
+
+		.menu_box>ul>li {
+			padding: 31px;
+
+		}
+
+
+		/* 右侧内容 */
+		.content_box {
+			margin-left: 30px;
+			width: 80%;
+		}
+
+		.content_box ul li {
+			padding: 5px 0;
+		}
+
+		.layui-panel {
+			margin-top: 30px;
+			padding: 5px;
+		}
+
+		/* 回到顶部 */
+		.btn_top_nav {
+			width: 50px;
+			height: 150px;
+			background-color: #a233c6;
+			color: #fff;
+			cursor: pointer;
+			position: fixed;
+			right: 5%;
+			bottom: 100px;
+		}
+
+		.dddd {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="layui-container">
+		<div class="content">
+			<div class="menu_box">
+				<ul class="layui-panel">
+					<li>
+						<a href="#tips">
+							<h3>1. 文档说明</h3>
+						</a>
+					</li>
+					<li>
+						<a href="#dsCreateOrder">
+							<h3>2. 代收下单</h3>
+						</a>
+					</li>
+					<li>
+						<a href="#dsNotify">
+							<h3>3. 代收回调</h3>
+						</a>
+					</li>
+					<li>
+						<a href="#dsQuerOrder">
+							<h3>4. 代收订单查询</h3>
+						</a>
+					</li>
+					<li>
+						<a href="#queryBalance">
+							<h3>5. 查询余额</h3>
+						</a>
+					</li>
+					<li>
+						<a href="#errCode">
+							<h3>6. 错误对照码</h3>
+						</a>
+					</li>
+					<li>
+						<a href="#sign">
+							<h3>7. 签名方式</h3>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="content_box">
+				<div id="tips" class="layui-panel">
+					<ul>
+						<li>1. 传输方式：HTTP / POST</li>
+						<li>2. 数据格式：JSON</li>
+						<li>3. 签名算法：MD5 或者 SHA256</li>
+						<li>4. 域名: <span class="colorRed" style="font-weight: bold;">找运维人员要最新地址</span></li>
+					</ul>
+				</div>
+				<fieldset class="layui-elem-field">
+					<legend class="colorRed fontw600">代收下单</legend>
+					<div id="dsCreateOrder" class="layui-panel layui-field-box">
+						<div>
+							<p>提交地址:<span class="fontw600">域名</span><span class="colorRed">/api/in/createOrder</span>
+							</p>
+							<p>请求方式: <span class="fontw600">POST/JSON</span></p>
+						</div>
+						<div>
+							<table class="layui-table">
+								<colgroup>
+									<col width="150">
+									<col width="150">
+									<col>
+								</colgroup>
+								<thead>
+									<tr>
+										<th>字段名</th>
+										<th>变量名</th>
+										<th>必填</th>
+										<th>类型</th>
+										<th>示例值</th>
+										<th>描述</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>商户号</td>
+										<td>appId</td>
+										<td class="colorRed">是</td>
+										<td>String</td>
+										<td>1634227918723108865</td>
+										<td>平台分配的唯一ID</td>
+									</tr>
+									<tr>
+										<td>商户订单号</td>
+										<td>merchantOrderNo</td>
+										<td class="colorRed">是</td>
+										<td>String</td>
+										<td>1634227918723108899</td>
+										<td>商户订单号</td>
+									</tr>
+									<tr>
+										<td>订单金额</td>
+										<td>amount</td>
+										<td class="colorRed">是</td>
+										<td>String</td>
+										<td>10.00</td>
+										<td>订单金额</td>
+									</tr>
+									<tr>
+										<td>支付类型</td>
+										<td>type</td>
+										<td class="colorRed">是</td>
+										<td>String</td>
+										<td> <b>alipay</b> | <b>wechat</b></td>
+										<td>支付类型</td>
+									</tr>
+									<tr>
+										<td>异步地址</td>
+										<td>notifyUrl</td>
+										<td class="colorRed">是</td>
+										<td>String</td>
+										<td>https://api.tmzf168.com/api/local/callback</td>
+										<td>服务器异步通知地址; 异步地址不要有参数</td>
+									</tr>
+									<tr>
+										<td>同步地址</td>
+										<td>returnUrl</td>
+										<td>否</td>
+										<td>String</td>
+										<td>https://tmzf168.com</td>
+										<td>页面跳转通知地址;</td>
+									</tr>
+									<tr>
+										<td>设备</td>
+										<td>device</td>
+										<td class="colorRed">是</td>
+										<td>String</td>
+										<td>pc | wap(移动, H5)</td>
+										<td>设备</td>
+									</tr>
+									<tr>
+										<td>签名值</td>
+										<td>sign</td>
+										<td class="colorRed">是</td>
+										<td>String</td>
+										<td>202cb962ac59075b964b07152d234b70</td>
+										<td>根据签名算法得到的值</td>
+									</tr>
+									<tr>
+										<td>签名方式</td>
+										<td>signType</td>
+										<td class="colorRed">是</td>
+										<td>String</td>
+										<td>MD5|SHA256</td>
+										<td>根据自己需求选择一种签名方式,平台的下单和回调都会采用此签名方式</td>
+									</tr>
+									<tr>
+										<td>版本</td>
+										<td>version</td>
+										<td class="colorRed">是</td>
+										<td>String</td>
+										<td>3.0</td>
+										<td>固定值 3.0</td>
+									</tr>
+									<tr>
+										<td>币种</td>
+										<td>currency</td>
+										<td class="colorRed">是</td>
+										<td>String</td>
+										<td>CNY</td>
+										<td>CNY, INR…</td>
+									</tr>
+									<tr>
+										<td>客户端IP</td>
+										<td>clientIp</td>
+										<td class="colorRed">是</td>
+										<td>String</td>
+										<td>189.433.643.67</td>
+										<td>客户端IP; 没有填写个假的</td>
+									</tr>
+									<tr>
+										<td>商品标题</td>
+										<td>subject</td>
+										<td>否</td>
+										<td>String</td>
+										<td>VIP会员</td>
+										<td>商品标题; 没有随便构造一个</td>
+									</tr>
+									<tr>
+										<td>额外参数</td>
+										<td>body</td>
+										<td>否</td>
+										<td>String</td>
+										<td>1634227918723108865</td>
+										<td>异步通知原路返回</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div>
+							<blockquote class="layui-elem-quote layui-quote-nm">
+								下单返回数据结构
+							</blockquote>
+							<pre class="layui-code">
+{
+   "status": 200,
+   "message": "success",
+   "data": {
+	  "appId": "1655087813533728768",
+	  "merchantOrderNo": "799c7cb4996f48a6b38e5e6c8bc9b662",
+	  "tradeNo": "1658067530754912258",
+	  "amount": "100",
+	  "createStatus": "1",
+	  "payUrl": "http://82.71.136.45/proxy/redirect/goto/weibao/18f2256a8c744a5a9a99bf22ac1da76e",
+	  "body": "6c91673723b647b2afa32625954b6255"
+   }
+}</pre>
+						</div>
+						<blockquote class="layui-elem-quote layui-quote-nm">
+							当 status 值不是 200 时, message 内容就是错误信息; 当status 是 200 时, data 参数参照下表
+						</blockquote>
+						<table class="layui-table">
+							<colgroup>
+								<col width="150">
+								<col width="150">
+								<col>
+							</colgroup>
+							<thead>
+								<tr>
+									<th>参数</th>
+									<th>说明</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>appId</td>
+									<td>商户号</td>
+								</tr>
+								<tr>
+									<td>merchantOrderNo</td>
+									<td>商户订单号</td>
+								</tr>
+								<tr>
+									<td>tradeNo</td>
+									<td>平台订单号</td>
+								</tr>
+								<tr>
+									<td>amount</td>
+									<td>订单金额</td>
+								</tr>
+								<tr>
+									<td>createStatus</td>
+									<td>订单创建状态; 0: 处理中; 1: 创建成功; 2: 创建失败</td>
+								</tr>
+								<tr>
+									<td>payUrl</td>
+									<td>收银台地址</td>
+								</tr>
+								<tr>
+									<td>body</td>
+									<td>额外参数</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</fieldset>
+				<!-- end 代收下单 -->
+
+
+				<!-- 代收回调 -->
+				<fieldset class="layui-elem-field">
+					<legend class="colorRed fontw600">代收回调</legend>
+					<div id="dsNotify" class="layui-field-box">
+						<h5>所有回调统一采用POST application/json 方式请求</h5>
+						<h6>回调参数</h6>
+						<table class="layui-table">
+							<colgroup>
+								<col width="150">
+								<col width="150">
+								<col>
+							</colgroup>
+							<thead>
+								<tr>
+									<th>参数</th>
+									<th>说明</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>appId</td>
+									<td>商户号</td>
+								</tr>
+								<tr>
+									<td>merchantOrderNo</td>
+									<td>商户订单号</td>
+								</tr>
+								<tr>
+									<td>tradeNo</td>
+									<td>平台订单号</td>
+								</tr>
+								<tr>
+									<td>amount</td>
+									<td>订单金额</td>
+								</tr>
+								<tr>
+									<td>payAmount</td>
+									<td>支付金额</td>
+								</tr>
+								<tr>
+									<td>payStatus</td>
+									<td>支付状态;1: 未支付; 2: 支付成功; 3: 退款成功; 4: 支付金额错误;</td>
+								</tr>
+								<tr>
+									<td>body</td>
+									<td>额外参数</td>
+								</tr>
+								<tr>
+									<td>signType</td>
+									<td>签名类型; 下单是填写的类型</td>
+								</tr>
+								<tr>
+									<td>sign</td>
+									<td>签名值; 根据下单时添加的签名类型得到的值</td>
+								</tr>
+							</tbody>
+						</table>
+						<div>
+							<div class="colorRed">注意</div>
+							<div>收到回调后, 验证通过后请返回字符串: <span class="colorRed">success</span></div>
+							<div>当用订单金额是100, 如果用户支付金额不是100时, 其他验证通过也请返回 success, 否则平台依然是当回调失败处理</div>
+							<div>回调失败平台会通知5次, 每次间隔10秒</div>
+							<blockquote class="layui-elem-quote layui-quote-nm">
+								回调校验大致流程
+							</blockquote>
+							<div>
+								<p>1. 校验订单号是不是自己平台的</p>
+								<p>2. 校验签名是否正确</p>
+								<p>3. 校验支付金额是否和下单金额一致</p>
+								<p>4. 根据支付金额完成平台自己的逻辑</p>
+							</div>
+							<div class="colorRed">当1和2校验通过后就应当返回 <b>success</b></div>
+						</div>
+						<blockquote class="layui-elem-quote layui-quote-nm">
+							回调请求数据格式
+						</blockquote>
+						<pre class="layui-code">
+{
+   "amount": "98",
+   "payAmount": "98",
+   "tradeNo": "1698359690916380673",
+   "appId": "1698206619242434561",
+   "sign": "E2B9C0DDEDC97AFD4AAB2190F76FD78B",
+   "signType": "MD5",
+   "body": "1",
+   "merchantOrderNo": "SN3069540284",
+   "payStatus": "2"
+}
+</pre>
+					</div>
+				</fieldset>
+				<!-- end 代收回调 -->
+
+				<!-- 代收订单查询 -->
+				<fieldset class="layui-elem-field">
+					<legend class="colorRed fontw600">代收订单查询</legend>
+					<div id="dsQuerOrder" class="layui-field-box">
+						<div>
+							<p>提交地址:<span class="fontw600">域名</span><span class="colorRed">/api/in/query</span>
+							</p>
+							<p>请求方式: <span class="fontw600">POST/JSON</span></p>
+						</div>
+						<h5>请求参数</h5>
+						<table class="layui-table">
+							<colgroup>
+								<col width="150">
+								<col width="150">
+							</colgroup>
+							<thead>
+								<tr>
+									<th>字段名</th>
+									<th>变量名</th>
+									<th>必填</th>
+									<th>类型</th>
+									<th>示例值</th>
+									<th>描述</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>商户号</td>
+									<td>appId</td>
+									<td class="colorRed">是</td>
+									<td>String</td>
+									<td>1655087813533728768</td>
+									<td>平台分配的唯一ID</td>
+								</tr>
+								<tr>
+									<td>商户订单号</td>
+									<td>merchantOrderNo</td>
+									<td class="colorRed">是</td>
+									<td>String</td>
+									<td>a450af7c001d4aa9935b81</td>
+									<td>商户唯一订单号</td>
+								</tr>
+								<tr>
+									<td>时间戳</td>
+									<td>timestamp</td>
+									<td class="colorRed">是</td>
+									<td>String</td>
+									<td>684151945372</td>
+									<td>3位时间戳; 毫秒级别</td>
+								</tr>
+								<tr>
+									<td>版本</td>
+									<td>version</td>
+									<td class="colorRed">是</td>
+									<td>String</td>
+									<td>3.0</td>
+									<td>固定值 3.0</td>
+								</tr>
+								<tr>
+									<td>签名类型</td>
+									<td>signType</td>
+									<td class="colorRed">是</td>
+									<td>String</td>
+									<td>MD5 或 SHA256</td>
+									<td>签名方式</td>
+								</tr>
+								<tr>
+									<td>签名值</td>
+									<td>sign</td>
+									<td class="colorRed">是</td>
+									<td>String</td>
+									<td>a450af7c001d4aa9935b81c2f4a98fed</td>
+									<td>签名结果</td>
+								</tr>
+							</tbody>
+						</table>
+						<blockquote class="layui-elem-quote layui-quote-nm">
+							查询响应结果
+						</blockquote>
+						<pre class="layui-code">
+{
+   "status": 200,
+   "message": "success",
+   "data": {
+      "amount": "100.00",
+      "payAmount": "0",
+      "tradeNo": "1658076569052213250",
+      "payTime": null,
+      "createTime": "1684151234298",
+      "appId": "1655087813533728768",
+      "outTradeNo": "a450af7c001d4aa9b42b81c2f4a98fed",
+      "sign": "886ec49a1252ad3008ec8b737a80f93014244983eace4ed8c758c3da8a60778d",
+      "signType": "SHA256",
+      "payStatus": "1"
+   }
+}</pre>
+						<blockquote class="layui-elem-quote layui-quote-nm">
+							<p>当 status 值 为 200 时, data 内容参考下表; 如果不是 200, message 则为错误信息;</p>
+						</blockquote>
+						<table class="layui-table">
+							<colgroup>
+								<col width="150">
+								<col width="150">
+								<col>
+							</colgroup>
+							<thead>
+								<tr>
+									<th>参数</th>
+									<th>参数说明</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>appId</td>
+									<td>商户号</td>
+								</tr>
+								<tr>
+									<td>outTradeNo</td>
+									<td>商户订单号</td>
+								</tr>
+								<tr>
+									<td>tradeNo</td>
+									<td>平台订单号</td>
+								</tr>
+								<tr>
+									<td>amount</td>
+									<td>订单金额</td>
+								</tr>
+								<tr>
+									<td>payAmount</td>
+									<td>支付金额</td>
+								</tr>
+								<tr>
+									<td>payStatus</td>
+									<td>支付状态; 1: 未支付; 2: 支付成功; 4: 支付金额错误</td>
+								</tr>
+								<tr>
+									<td>payTime</td>
+									<td>支付时间;13位时间戳, 未支付是 null</td>
+								</tr>
+								<tr>
+									<td>createTime</td>
+									<td>订单创建时间; 13位时间戳</td>
+								</tr>
+								<tr>
+									<td>signType</td>
+									<td>签名方式</td>
+								</tr>
+								<tr>
+									<td>sign</td>
+									<td>签名结果; 根据提交的签名类型得到的值; 具体参考签名方法</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</fieldset>
+				<!-- end 代收订单查询 -->
+
+				<!-- 余额查询 -->
+				<fieldset class="layui-elem-field">
+					<legend class="colorRed fontw600">商户余额查询</legend>
+					<div id="queryBalance" class="layui-field-box">
+						<div>
+							<p>提交地址:<span class="fontw600">域名</span><span class="colorRed">/query/balance</span>
+							</p>
+							<p>请求方式: <span class="fontw600">POST/JSON</span></p>
+						</div>
+						<h5>请求参数</h5>
+						<table class="layui-table">
+							<colgroup>
+								<col width="150">
+								<col width="150">
+							</colgroup>
+							<thead>
+								<tr>
+									<th>字段名</th>
+									<th>变量名</th>
+									<th>必填</th>
+									<th>类型</th>
+									<th>示例值</th>
+									<th>描述</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>商户号</td>
+									<td>appId</td>
+									<td class="colorRed">是</td>
+									<td>String</td>
+									<td>1655087813533728768</td>
+									<td>平台分配的唯一ID</td>
+								</tr>
+								<tr>
+									<td>时间戳</td>
+									<td>timestamp</td>
+									<td class="colorRed">是</td>
+									<td>String</td>
+									<td>684151945372</td>
+									<td>13位时间戳; 毫秒级别</td>
+								</tr>
+								<tr>
+									<td>版本</td>
+									<td>version</td>
+									<td class="colorRed">是</td>
+									<td>String</td>
+									<td>3.0</td>
+									<td>固定值 3.0</td>
+								</tr>
+								<tr>
+									<td>签名类型</td>
+									<td>signType</td>
+									<td class="colorRed">是</td>
+									<td>String</td>
+									<td>MD5 或 SHA256</td>
+									<td>签名方式</td>
+								</tr>
+								<tr>
+									<td>签名值</td>
+									<td>sign</td>
+									<td class="colorRed">是</td>
+									<td>String</td>
+									<td>a450af7c001d4aa9935b81c2f4a98fed</td>
+									<td>签名结果</td>
+								</tr>
+							</tbody>
+						</table>
+						<blockquote class="layui-elem-quote layui-quote-nm">
+							查询响应结果
+						</blockquote>
+						<pre class="layui-code">
+{
+  "status": 200,
+  "message": "success",
+    "data": {
+      "balance": "1476.69",
+      "appId": "1655087813563088897",
+      "freezeMoney": "100.00"
+  }
+}
+</pre>
+						<blockquote class="layui-elem-quote layui-quote-nm">
+							<p>当 status 值 为 200 时, data 内容参考下表; 如果不是 200, message 则为错误信息;</p>
+						</blockquote>
+						<table class="layui-table">
+							<colgroup>
+								<col width="150">
+								<col width="150">
+								<col>
+							</colgroup>
+							<thead>
+								<tr>
+									<th>参数</th>
+									<th>参数说明</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>appId</td>
+									<td>商户号</td>
+								</tr>
+								<tr>
+									<td>balance</td>
+									<td>当前可用余额</td>
+								</tr>
+								<tr>
+									<td>freezeMoney</td>
+									<td>冻结余额(代付中的金额)</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</fieldset>
+				<!-- end 余额查询 -->
+
+				<!-- 错误对照码表 -->
+				<fieldset class="layui-elem-field">
+					<legend class="colorRed fontw600">错误对照码表</legend>
+					<div id="errCode" class="layui-field-box">
+						<table class="layui-table">
+							<colgroup>
+								<col width="150">
+								<col width="150">
+								<col>
+							</colgroup>
+							<thead>
+								<tr>
+									<th>错误编码</th>
+									<th>描述</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>200</td>
+									<td>正确码</td>
+								</tr>
+								<tr>
+									<td>-9999</td>
+									<td>所有错误码;错误消息请查看<span class="colorRed">message</span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</fieldset>
+				<!-- 错误码表 -->
+
+				<!-- 签名方式 -->
+				<fieldset class="layui-elem-field">
+					<legend class="colorRed fontw600">签名方式介绍</legend>
+					<div id="sign" class="layui-field-box">
+						<ol>
+							<li>1. 将发送或接收到的所有参数按照参数名按照ASCII码从小到大排序（a-z）空值和sign不参与签名.</li>
+							<li>2. 将排序后的参数拼接成URL键值对的格式; 如: k1=v1&k2=v2&k3=v3..... 得到待签名字符串 strA.</li>
+							<li>3. 将签名字符串 strA 后面拼接 <span class="colorRed">&key=密钥</span>得到待签名字符串 strB.</li>
+							<li>4. 将待签名字符串 strB 进行合理加密 (MD5 或 SHA256) 就得到签名值 sign.</li>
+							<li>5. 平台目前只支持<span class="colorRed">MD5</span>和<span class="colorRed">SHA256</span>两种签名方式,
+								具体用那种用户自行选择;平台的回调也会依据用户选择的签名方式进行签名.</li>
+						</ol>
+					</div>
+				</fieldset>
+				<!-- end 签名方式 -->
+
+				<!-- 易支付 页面跳转支付 -->
+				<fieldset class="layui-elem-field">
+					<legend class="colorRed fontw600"></legend>
+					<div id="eapay_submit" class="layui-field-box">
+
+					</div>
+				</fieldset>
+				<!-- end易支付 页面跳转支付 -->
+
+				<!-- 易支付 API接口支付 -->
+				<div id="eapay_mapi">
+
+				</div>
+				<!-- end易支付 API接口支付 -->
+
+				<!-- 易支付 结果通知 -->
+				<div id="eapay_notify">
+
+				</div>
+				<!-- end 易支付 结果通知 -->
+			</div>
+		</div>
+
+		<div class="btn_top_nav">
+			<div class="dddd">
+				<i class="layui-icon layui-icon-up"></i>
+				<span>回到顶部</span>
+			</div>
+		</div>
+
+
+		<script>
+			layui.use('code', function () { //加载code模块
+				layui.code(); //引用code方法
+			});
+			$(".btn_top_nav").on("click", function () {
+				// document.body.scrollTop = document.documentElement.scrollTop = 0;
+				// scrollTo(0, 0);
+				window.scrollTo(0, 0);
+			});
+		</script>
+
+</body>
+
+</html>
