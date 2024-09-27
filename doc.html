@@ -826,7 +826,7 @@
 							<div>
 								<p>提交地址:<span class="fontw600">域名</span><span class="colorRed">/submit.php</span>
 								</p>
-								<p>请求方式: <span class="fontw600">POST/GET 表单</span></p>
+								<p>请求方式: <span class="fontw600">POST/GET 建议采用 POST/JSON 请求</span></p>
 							</div>
 							<div>
 								<table class="layui-table">
@@ -923,9 +923,6 @@
 										</tr>
 									</tbody>
 								</table>
-								<blockquote class="layui-elem-quote">
-									支付方式 type 不传递会跳转到收银台, 让用户选择支付方式, 如果传递直接到支付页面
-								</blockquote>
 							</div>
 						</div>
 					</div>
@@ -939,7 +936,7 @@
 							<div>
 								<p>提交地址:<span class="fontw600">域名</span><span class="colorRed">/mapi.php</span>
 								</p>
-								<p>请求方式: <span class="fontw600">POST/GET 表单</span></p>
+								<p>请求方式: <span class="fontw600">POST|GET / JSON; 建议采用 POST/JSON</span></p>
 							</div>
 							<div>
 								<table class="layui-table">
@@ -1055,6 +1052,9 @@
 									</tbody>
 								</table>
 							</div>
+							<blockquote class="layui-elem-quote">
+								mapi.php 是接口模式返回支付地址, 需要平台自行跳转, 建议采用 submit.php 下单, 这样简化流程
+							</blockquote>
 						</div>
 						<blockquote class="layui-elem-quote">
 							返回结果(JSON格式)
@@ -1124,7 +1124,7 @@
 							<div>
 								<p>提交地址:<span class="fontw600">域名</span><span class="colorRed">/api.php</span>
 								</p>
-								<p>请求方式: <span class="fontw600">POST/GET 表单</span></p>
+								<p>请求方式: <span class="fontw600">建议POST/JSON</span></p>
 							</div>
 							<div>
 								<table class="layui-table">
